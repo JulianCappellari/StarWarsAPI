@@ -2,7 +2,14 @@ import mongoose from 'mongoose';
 
 export const dbConexion = async (): Promise<void> => {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/StarWarsDB');
+    const dbUrl = process.env.CONNEXION_MONGOSE;
+    
+    if (!dbUrl) {
+      throw new Error('La variable de entorno CONNEXION_MONGOSE no está definida');
+    }
+
+    console.log(dbUrl)
+    await mongoose.connect(dbUrl);
     console.log('DB conectada correctamente');
   } catch (error) {
     console.error('Error al conectar con la base de datos:', error);

@@ -6,6 +6,8 @@ import { syncPeopleData } from './services/syncPeople';
 import { syncPlanetsData } from './services/syncPlanets';
 import { syncStarshipsData } from './services/syncStarships';
 import router from './routes/App';
+import 'dotenv/config';
+
 
 const app = express();
 
