@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2019", // or a later version
-    "module": "commonjs", // or "esnext" based on your project needs
+    "target": "ES2019", 
+    "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist"
+    "outDir": "./dist" // Asegúrate de que los archivos JS se generen aquí
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-, "src/tests/peopleController.test.js", "src/index.js"  ]
+    "src/**/*.ts" // Solo incluye archivos TypeScript
+  ]
 }
