@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const peopleController_1 = require("../controllers/peopleController");
+const filmsController_1 = require("../controllers/filmsController");
+const startshipsControllers_1 = require("../controllers/startshipsControllers");
+const planetsController_1 = require("../controllers/planetsController");
+const router = (0, express_1.Router)();
+router.get("/people", peopleController_1.getPeople);
+router.get("/films", filmsController_1.getFilms);
+router.get("/starships", startshipsControllers_1.getStarships);
+router.get("/planets", planetsController_1.getPlanets);
+exports.default = router;
