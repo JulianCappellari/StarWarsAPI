@@ -8,7 +8,8 @@ Este proyecto implementa una RESTful API para sincronizar y gestionar la informa
 - Endpoints de listado de entidades con filtros y paginación.
 - Base de datos MongoDB para almacenar la información.
 - Tests unitarios implementados.
-- Desplegado en **Heroku/Railway**.
+- Desplegado en **Railway**.
+- Uso de Swagger UI para la documentacion de la API
 
 ## Tecnologías Utilizadas
 
