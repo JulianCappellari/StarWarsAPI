@@ -31,10 +31,10 @@ https://starwarsapi-xop3.onrender.com/api
 
 Cada entidad cuenta con su propio endpoint. Para consultar una lista o realizar búsquedas, puedes utilizar las rutas correspondientes:
 
-People: /api/people (filtro: name)
-Films: /api/films (filtro: title)
-Starships: /api/starships (filtro: name)
-Planets: /api/planets (filtros: name)
+- **People**: /api/people (filtro: name)
+- **Films**: /api/films (filtro: title)
+- **Starships**: /api/starships (filtro: name)
+- **Planets**: /api/planets (filtros: name)
 
 
 ## Documentación de la API
