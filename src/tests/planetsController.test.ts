@@ -1,10 +1,9 @@
-import { Request, Response } from "express";
-import { getFilms } from "../controllers/filmsController";
-import Films from "../models/Films";
+import { getPlanets } from "../controllers/planetsController";
+import Planets from "../models/Planets";
 import axios from "axios";
+import { Request, Response } from "express";
 
-
-jest.mock("../models/Films", () => ({
+jest.mock("../models/Planets", () => ({
   find: jest.fn(),
   insertMany: jest.fn(),
   countDocuments: jest.fn(),
@@ -12,46 +11,44 @@ jest.mock("../models/Films", () => ({
 
 jest.mock("axios");
 
-describe("GET /api/films", () => {
+describe("GET /api/planets", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks();  
   });
 
-  it("should return films from the database with filters", async () => {
-    const mockFilms = [
-      { title: "Return of the Jedi", episode_id: 6 },
-      { title: "A New Hope", episode_id: 4 },
-    ];
+  it("should return planets from the database with filters", async () => {
+    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
 
-    (Films.find as jest.Mock).mockReturnValue({
+    (Planets.find as jest.Mock).mockReturnValue({
       skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue(mockFilms), 
+        limit: jest.fn().mockResolvedValue(mockPlanets), 
       }),
     });
 
-    (Films.countDocuments as jest.Mock).mockResolvedValue(mockFilms.length);
+    (Planets.countDocuments as jest.Mock).mockResolvedValue(mockPlanets.length); 
 
-    const req = { query: { title: "Return of the Jedi", page: "1", limit: "10" } } as unknown as Request;
+    const req = {
+      query: { page: "1", limit: "10" },
+    } as unknown as Request;
 
     const res = {
       json: jest.fn(),
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
-    expect(Films.find).toHaveBeenCalledWith({
-      title: new RegExp("Return of the Jedi", "i"),
-    });
+    expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
-      total: mockFilms.length,
+      total: mockPlanets.length,
       currentPage: 1,
-      films: mockFilms,
+      totalPages: 1,
+      data: mockPlanets,
     });
   });
 
   it("should handle errors when fetching from the external API", async () => {
-    (Films.find as jest.Mock).mockReturnValueOnce({
+    (Planets.find as jest.Mock).mockReturnValueOnce({
       skip: jest.fn().mockReturnValue({
         limit: jest.fn().mockResolvedValue([]),
       }),
@@ -68,10 +65,10 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
-    expect(Films.find).toHaveBeenCalledWith({});
-    expect(axios.get).toHaveBeenCalledWith("https://swapi.dev/api/films/");
+    expect(Planets.find).toHaveBeenCalledWith({});
+    expect(axios.get).toHaveBeenCalledWith("https://swapi.dev/api/planets/");
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: "API Error" });
   });
@@ -86,7 +83,7 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
@@ -104,7 +101,7 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
@@ -112,19 +109,16 @@ describe("GET /api/films", () => {
     });
   });
 
-  it("should return all films if no parameters are provided", async () => {
-    const mockFilms = [
-      { title: "Return of the Jedi", episode_id: 6 },
-      { title: "A New Hope", episode_id: 4 },
-    ];
+  it("should return all planets if no parameters are provided", async () => {
+    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
 
-    (Films.find as jest.Mock).mockReturnValue({
+    (Planets.find as jest.Mock).mockReturnValue({
       skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue(mockFilms),
+        limit: jest.fn().mockResolvedValue(mockPlanets),
       }),
     });
 
-    (Films.countDocuments as jest.Mock).mockResolvedValue(mockFilms.length);
+    (Planets.countDocuments as jest.Mock).mockResolvedValue(mockPlanets.length);
 
     const req = {
       query: {},
@@ -135,29 +129,27 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
-      total: mockFilms.length,
+      total: mockPlanets.length,
       currentPage: 1,
-      films: mockFilms,
+      totalPages: 1,
+      data: mockPlanets,
     });
   });
 
-  it("should insert new films into the database if no films are found", async () => {
-    (Films.find as jest.Mock).mockReturnValueOnce({
+  it("should insert new planets into the database if no planets are found", async () => {
+    (Planets.find as jest.Mock).mockReturnValueOnce({
       skip: jest.fn().mockReturnValue({
         limit: jest.fn().mockResolvedValue([]),
       }),
     });
 
-    const mockFilms = [
-      { title: "Return of the Jedi", episode_id: 6 },
-      { title: "A New Hope", episode_id: 4 },
-    ];
+    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
     (axios.get as jest.Mock).mockResolvedValueOnce({
-      data: { results: mockFilms },
+      data: { results: mockPlanets },
     });
 
     const req = {
@@ -169,36 +161,32 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
-    expect(Films.insertMany).toHaveBeenCalledWith(mockFilms);
+    expect(Planets.insertMany).toHaveBeenCalledWith(mockPlanets);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
-      total: mockFilms.length,
+      total: mockPlanets.length,
       currentPage: 1,
-      films: mockFilms,
+      totalPages: 1,
+      data: mockPlanets,
     });
   });
 
-  it("should return 500 if inserting new films into the database fails", async () => {
-    (Films.find as jest.Mock).mockReturnValueOnce({
+  it("should return 500 if inserting new planets into the database fails", async () => {
+    (Planets.find as jest.Mock).mockReturnValueOnce({
       skip: jest.fn().mockReturnValue({
         limit: jest.fn().mockResolvedValue([]),
       }),
     });
 
-    const mockFilms = [
-      { title: "Return of the Jedi", episode_id: 6 },
-      { title: "A New Hope", episode_id: 4 },
-    ];
+    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
     (axios.get as jest.Mock).mockResolvedValueOnce({
-      data: { results: mockFilms },
+      data: { results: mockPlanets },
     });
 
     
-    (Films.insertMany as jest.Mock).mockRejectedValueOnce(
-      new Error("Insert error")
-    );
+    (Planets.insertMany as jest.Mock).mockRejectedValueOnce(new Error("Insert error"));
 
     const req = {
       query: { page: "1", limit: "10" },
@@ -209,9 +197,40 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    await getPlanets(req, res);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });
+  });
+
+  it("should return planets filtered by name", async () => {
+    const mockPlanets = [{ name: "Tatooine" }];
+
+    (Planets.find as jest.Mock).mockReturnValue({
+      skip: jest.fn().mockReturnValue({
+        limit: jest.fn().mockResolvedValue(mockPlanets),
+      }),
+    });
+
+    (Planets.countDocuments as jest.Mock).mockResolvedValue(mockPlanets.length);
+
+    const req = {
+      query: { name: "Tatooine", page: "1", limit: "10" },
+    } as unknown as Request;
+
+    const res = {
+      json: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    } as unknown as Response;
+
+    await getPlanets(req, res);
+
+    expect(res.status).not.toHaveBeenCalled();
+    expect(res.json).toHaveBeenCalledWith({
+      total: mockPlanets.length,
+      currentPage: 1,
+      totalPages: 1,
+      data: mockPlanets,
+    });
   });
 });

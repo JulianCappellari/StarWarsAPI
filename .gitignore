@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+porlas.ts
+porlas2.ts
+porlas3.ts
 
 # testing
 /coverage

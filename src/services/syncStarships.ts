@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Starships from '../models/Startships'; // Asegúrate de que el nombre del modelo sea correcto.
+import Starships from '../models/Starships'; // Asegúrate de que el nombre del modelo sea correcto.
 
 export const syncStarshipsData = async () => {
   try {
