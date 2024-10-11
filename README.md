@@ -20,5 +20,5 @@ Este proyecto implementa una RESTful API para sincronizar y gestionar la informa
 - **Cron Jobs** para la sincronización periódica.
 - **Jest** para tests unitarios.
 
-
+## Para poder usa la API solo tiene que ir al siguiente link: https://starwarsapi-xop3.onrender.com/api
 
