@@ -1,7 +1,8 @@
 import axios from "axios";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Starships from "../models/Starships";
-import { getStarships } from "../controllers/startshipsControllers";
+import { getStarship } from "../controllers/startshipsControllers";
+
 
 jest.mock("../models/Starships", () => ({
   find: jest.fn(),
@@ -47,7 +48,8 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(Starships.find).toHaveBeenCalledWith({
       name: new RegExp("Falcon", "i"),
@@ -81,7 +83,8 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(Starships.find).toHaveBeenCalledWith({});
     expect(axios.get).toHaveBeenCalledWith("https://swapi.dev/api/starships");
@@ -99,11 +102,12 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Invalid parameter: page must be a number.",
+      error: "Parametro invalido: page debe ser un numero.",
     });
   });
 
@@ -117,11 +121,12 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Invalid parameter: limit must be a number.",
+      error: "Parametro invalido: limit debe ser un numero.",
     });
   });
 
@@ -156,7 +161,8 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
@@ -200,7 +206,8 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(Starships.insertMany).toHaveBeenCalledWith(mockStarships);
     expect(res.status).not.toHaveBeenCalled();
@@ -250,7 +257,8 @@ describe("GET /api/starships", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getStarships(req, res);
+    const next: NextFunction = jest.fn(); 
+    await getStarship(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });

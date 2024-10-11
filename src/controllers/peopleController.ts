@@ -1,17 +1,20 @@
-import { Request, RequestHandler, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { RequestHandler } from "express"; // Ajustado para usar el tipo correcto
 import People from "../models/People";
 import axios from "axios";
 
-export const getPeople = async (req: Request, res: Response) => {
+export const getPeople: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { name, page = 1, limit = 10 } = req.query;
   const filter = name ? { name: new RegExp(name as string, "i") } : {};
 
-  // Validar los parámetros de paginación
+
   if (page && isNaN(Number(page))) {
-    return res.status(400).json({ error: "Invalid parameter: page must be a number." });
+    res.status(400).json({ error: "Parametro invalido: page debe ser un numero." });
+    return; 
   }
   if (limit && isNaN(Number(limit))) {
-    return res.status(400).json({ error: "Invalid parameter: limit must be a number." });
+    res.status(400).json({ error: "Parametro invalido: limit debe ser un numero." });
+    return; 
   }
 
   try {
@@ -32,13 +35,13 @@ export const getPeople = async (req: Request, res: Response) => {
 
     const total = await People.countDocuments(filter);
 
-    return res.json({
+    res.json({
       total,
       currentPage: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       data: people,
     });
   } catch (error) {
-    return res.status(500).json({ error: error instanceof Error ? error.message : "Internal Server Error" });
+    res.status(500).json({ error: error instanceof Error ? error.message : "Internal Server Error" });
   }
 };

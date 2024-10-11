@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { getFilms } from "../controllers/filmsController";
 import Films from "../models/Films";
 import axios from "axios";
-
 
 jest.mock("../models/Films", () => ({
   find: jest.fn(),
@@ -25,20 +24,23 @@ describe("GET /api/films", () => {
 
     (Films.find as jest.Mock).mockReturnValue({
       skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue(mockFilms), 
+        limit: jest.fn().mockResolvedValue(mockFilms),
       }),
     });
 
     (Films.countDocuments as jest.Mock).mockResolvedValue(mockFilms.length);
 
-    const req = { query: { title: "Return of the Jedi", page: "1", limit: "10" } } as unknown as Request;
+    const req = {
+      query: { title: "Return of the Jedi", page: "1", limit: "10" },
+    } as unknown as Request;
 
     const res = {
       json: jest.fn(),
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(Films.find).toHaveBeenCalledWith({
       title: new RegExp("Return of the Jedi", "i"),
@@ -68,7 +70,8 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(Films.find).toHaveBeenCalledWith({});
     expect(axios.get).toHaveBeenCalledWith("https://swapi.dev/api/films/");
@@ -86,11 +89,12 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Invalid parameter: page must be a number.",
+      error: "Parametro invalido: page debe ser un numero.",
     });
   });
 
@@ -104,11 +108,12 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Invalid parameter: limit must be a number.",
+      error: "Parametro invalido: limit debe ser un numero.",
     });
   });
 
@@ -135,7 +140,8 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
@@ -169,7 +175,8 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(Films.insertMany).toHaveBeenCalledWith(mockFilms);
     expect(res.status).not.toHaveBeenCalled();
@@ -195,7 +202,6 @@ describe("GET /api/films", () => {
       data: { results: mockFilms },
     });
 
-    
     (Films.insertMany as jest.Mock).mockRejectedValueOnce(
       new Error("Insert error")
     );
@@ -209,7 +215,8 @@ describe("GET /api/films", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getFilms(req, res);
+    const next: NextFunction = jest.fn();
+    await getFilms(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });

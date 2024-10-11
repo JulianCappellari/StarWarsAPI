@@ -1,7 +1,7 @@
 import { getPeople } from "../controllers/peopleController";
 import People from "../models/People";
 import axios from "axios";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 jest.mock("../models/People", () => ({
   find: jest.fn(),
@@ -36,7 +36,9 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
@@ -65,7 +67,9 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(People.find).toHaveBeenCalledWith({});
     expect(axios.get).toHaveBeenCalledWith("https://swapi.dev/api/people");
@@ -83,11 +87,13 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Invalid parameter: page must be a number.",
+      error: "Parametro invalido: page debe ser un numero.",
     });
   });
 
@@ -101,11 +107,13 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Invalid parameter: limit must be a number.",
+      error: "Parametro invalido: limit debe ser un numero.",
     });
   });
 
@@ -129,7 +137,9 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
@@ -161,7 +171,9 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(People.insertMany).toHaveBeenCalledWith(mockPeople);
     expect(res.status).not.toHaveBeenCalled();
@@ -193,7 +205,9 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
@@ -203,7 +217,6 @@ describe("GET /api/people", () => {
       data: mockPeople,
     });
   });
-  
 
   it("should return 500 if inserting new people into the database fails", async () => {
     (People.find as jest.Mock).mockReturnValueOnce({
@@ -217,7 +230,6 @@ describe("GET /api/people", () => {
       data: { results: mockPeople },
     });
 
-    
     (People.insertMany as jest.Mock).mockRejectedValueOnce(
       new Error("Insert error")
     );
@@ -231,7 +243,9 @@ describe("GET /api/people", () => {
       status: jest.fn().mockReturnThis(),
     } as unknown as Response;
 
-    await getPeople(req, res);
+    const next: NextFunction = jest.fn(); 
+
+    await getPeople(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });

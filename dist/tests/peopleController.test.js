@@ -31,7 +31,8 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(res.status).not.toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith({
             total: mockPeople.length,
@@ -54,7 +55,8 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(People_1.default.find).toHaveBeenCalledWith({});
         expect(axios_1.default.get).toHaveBeenCalledWith("https://swapi.dev/api/people");
         expect(res.status).toHaveBeenCalledWith(500);
@@ -68,10 +70,11 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({
-            error: "Invalid parameter: page must be a number.",
+            error: "Parametro invalido: page debe ser un numero.",
         });
     });
     it("should return 400 if limit is not a number", async () => {
@@ -82,10 +85,11 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({
-            error: "Invalid parameter: limit must be a number.",
+            error: "Parametro invalido: limit debe ser un numero.",
         });
     });
     it("should return all people if no parameters are provided", async () => {
@@ -103,7 +107,8 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(res.status).not.toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith({
             total: mockPeople.length,
@@ -129,7 +134,8 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(People_1.default.insertMany).toHaveBeenCalledWith(mockPeople);
         expect(res.status).not.toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith({
@@ -154,7 +160,8 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(res.status).not.toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith({
             total: mockPeople.length,
@@ -181,7 +188,8 @@ describe("GET /api/people", () => {
             json: jest.fn(),
             status: jest.fn().mockReturnThis(),
         };
-        await (0, peopleController_1.getPeople)(req, res);
+        const next = jest.fn();
+        await (0, peopleController_1.getPeople)(req, res, next);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });
     });

@@ -6,13 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPlanets = void 0;
 const Planets_1 = __importDefault(require("../models/Planets"));
 const axios_1 = __importDefault(require("axios"));
-const getPlanets = async (req, res) => {
+const getPlanets = async (req, res, next) => {
     const { name, page = 1, limit = 10 } = req.query;
     if (page && isNaN(Number(page))) {
-        return res.status(400).json({ error: "Invalid parameter: page must be a number." });
+        res.status(400).json({ error: "Parametro invalido: page debe ser un numero." });
+        return;
     }
     if (limit && isNaN(Number(limit))) {
-        return res.status(400).json({ error: "Invalid parameter: limit must be a number." });
+        res.status(400).json({ error: "Parametro invalido: limit debe ser un numero." });
+        return;
     }
     const filter = name ? { name: new RegExp(name, "i") } : {};
     try {
@@ -28,7 +30,7 @@ const getPlanets = async (req, res) => {
                 .limit(Number(limit));
         }
         const total = await Planets_1.default.countDocuments(filter);
-        return res.json({
+        res.json({
             total,
             currentPage: Number(page),
             totalPages: Math.ceil(total / Number(limit)),
@@ -36,7 +38,7 @@ const getPlanets = async (req, res) => {
         });
     }
     catch (error) {
-        return res.status(500).json({ error: error instanceof Error ? error.message : "Internal Server Error" });
+        res.status(500).json({ error: error instanceof Error ? error.message : "Internal Server Error" });
     }
 };
 exports.getPlanets = getPlanets;

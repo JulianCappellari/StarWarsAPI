@@ -10,5 +10,5 @@
   },
   "include": [
     "src/**/*.ts" // Solo incluye archivos TypeScript
-, "src/routes/App.ts"  ]
+, "src/routes/App.ts", "src/utils/swagger.ts"  ]
 }
