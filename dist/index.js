@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dbConfig_1 = require("./config/dbConfig");
 require("./cron/scheduler");
-const App_1 = __importDefault(require("./routes/App"));
 require("dotenv/config");
+const App_1 = __importDefault(require("./routes/App"));
 const app = (0, express_1.default)();
 const startServer = async () => {
     await (0, dbConfig_1.dbConexion)();

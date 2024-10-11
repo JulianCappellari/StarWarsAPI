@@ -4,6 +4,8 @@ import { getFilms } from "../controllers/filmsController";
 import { getStarships } from "../controllers/startshipsControllers";
 import { getPlanets } from "../controllers/planetsController";
 
+
+
 const router = Router();
 
 router.get("/people", getPeople);

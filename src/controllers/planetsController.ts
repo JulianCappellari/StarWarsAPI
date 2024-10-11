@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import Planets from "../models/Planets";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ export const getPlanets = async (req: Request, res: Response) => {
 
     const total = await Planets.countDocuments(filter);
 
-    res.json({
+    return res.json({
       total,
       currentPage: Number(page),
       totalPages: Math.ceil(total / Number(limit)),

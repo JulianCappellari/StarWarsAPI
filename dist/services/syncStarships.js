@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.syncStarshipsData = void 0;
 const axios_1 = __importDefault(require("axios"));
-const Startships_1 = __importDefault(require("../models/Startships")); // Asegúrate de que el nombre del modelo sea correcto.
+const Starships_1 = __importDefault(require("../models/Starships")); // Asegúrate de que el nombre del modelo sea correcto.
 const syncStarshipsData = async () => {
     try {
         console.log('Fetching starships data from API...');
@@ -14,7 +14,7 @@ const syncStarshipsData = async () => {
         console.log(`Fetched ${starshipsData.length} starships from API.`);
         for (const starship of starshipsData) {
             console.log(`Updating or inserting starship: ${starship.name}`);
-            await Startships_1.default.updateOne({ name: starship.name }, starship, { upsert: true });
+            await Starships_1.default.updateOne({ name: starship.name }, starship, { upsert: true });
         }
         console.log('Starships data synchronized');
     }

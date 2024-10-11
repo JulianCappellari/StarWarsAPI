@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1728672784339" clover="3.2.0">
-  <project timestamp="1728672784339" name="All files">
+<coverage generated="1728674119850" clover="3.2.0">
+  <project timestamp="1728674119850" name="All files">
     <metrics statements="76" coveredstatements="76" conditionals="52" coveredconditionals="48" methods="4" coveredmethods="4" elements="132" coveredelements="128" complexity="0" loc="76" ncloc="76" packages="1" files="4" classes="4"/>
     <file name="filmsController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\filmsController.ts">
       <metrics statements="19" coveredstatements="19" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
@@ -9,20 +9,20 @@
       <line num="5" count="1" type="stmt"/>
       <line num="6" count="7" type="cond" truecount="2" falsecount="0"/>
       <line num="7" count="7" type="cond" truecount="2" falsecount="0"/>
-      <line num="9" count="7" type="cond" truecount="3" falsecount="0"/>
-      <line num="10" count="1" type="stmt"/>
-      <line num="14" count="6" type="cond" truecount="3" falsecount="0"/>
-      <line num="15" count="1" type="stmt"/>
-      <line num="20" count="5" type="stmt"/>
+      <line num="10" count="7" type="cond" truecount="3" falsecount="0"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="15" count="6" type="cond" truecount="3" falsecount="0"/>
+      <line num="16" count="1" type="stmt"/>
       <line num="21" count="5" type="stmt"/>
-      <line num="25" count="5" type="cond" truecount="1" falsecount="0"/>
-      <line num="26" count="3" type="stmt"/>
-      <line num="27" count="2" type="stmt"/>
+      <line num="22" count="5" type="stmt"/>
+      <line num="27" count="5" type="cond" truecount="1" falsecount="0"/>
+      <line num="28" count="3" type="stmt"/>
       <line num="29" count="2" type="stmt"/>
-      <line num="31" count="1" type="stmt"/>
-      <line num="36" count="3" type="stmt"/>
+      <line num="31" count="2" type="stmt"/>
+      <line num="33" count="1" type="stmt"/>
       <line num="38" count="3" type="stmt"/>
-      <line num="44" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="41" count="3" type="stmt"/>
+      <line num="48" count="2" type="cond" truecount="1" falsecount="1"/>
     </file>
     <file name="peopleController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\peopleController.ts">
       <metrics statements="19" coveredstatements="19" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>

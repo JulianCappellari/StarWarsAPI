@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import axios from "axios";
 import Starships from "../models/Starships";
 
@@ -32,7 +32,7 @@ export const getStarships = async (req: Request, res: Response) => {
 
     const total = await Starships.countDocuments(filter);
 
-    res.json({
+    return res.json({
       total,
       currentPage: Number(page),
       totalPages: Math.ceil(total / Number(limit)),

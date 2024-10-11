@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import Films from "../models/Films";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ export const getFilms = async (req: Request, res: Response) => {
   const { title, page = 1, limit = 10 } = req.query;
   const filter = title ? { title: new RegExp(title as string, "i") } : {};
 
+  // Validar los parámetros de paginación
   if (page && isNaN(Number(page))) {
     return res
       .status(400)
@@ -18,29 +19,32 @@ export const getFilms = async (req: Request, res: Response) => {
   }
 
   try {
-    let film = await Films.find(filter)
+    let films = await Films.find(filter)
       .skip((Number(page) - 1) * Number(limit))
       .limit(Number(limit));
 
-    if (film.length === 0) {
+    // Si no hay películas en la base de datos, obtenerlas de la API
+    if (films.length === 0) {
       const response = await axios.get("https://swapi.dev/api/films/");
-      film = response.data.results;
+      films = response.data.results;
 
-      await Films.insertMany(film);
+      await Films.insertMany(films);
 
-      film = await Films.find(filter)
+      films = await Films.find(filter)
         .skip((Number(page) - 1) * Number(limit))
         .limit(Number(limit));
     }
 
     const total = await Films.countDocuments(filter);
 
-    res.json({
+    // Retornar la respuesta final
+    return res.json({
       total,
       currentPage: Number(page),
-      films: film,
+      films,
     });
   } catch (error) {
+    // Manejar el error y devolver respuesta
     return res.status(500).json({ error: error instanceof Error ? error.message : "Internal Server Error" });
   }
 };

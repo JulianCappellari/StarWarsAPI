@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import People from "../models/People";
 import axios from "axios";
 
@@ -6,7 +6,7 @@ export const getPeople = async (req: Request, res: Response) => {
   const { name, page = 1, limit = 10 } = req.query;
   const filter = name ? { name: new RegExp(name as string, "i") } : {};
 
-  
+  // Validar los parámetros de paginación
   if (page && isNaN(Number(page))) {
     return res.status(400).json({ error: "Invalid parameter: page must be a number." });
   }
@@ -32,7 +32,7 @@ export const getPeople = async (req: Request, res: Response) => {
 
     const total = await People.countDocuments(filter);
 
-    res.json({
+    return res.json({
       total,
       currentPage: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
