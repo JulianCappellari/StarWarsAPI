@@ -184,7 +184,7 @@ router.get("/films", middlewareValidator_1.middlewareValidator, filmsController_
  *       500:
  *         description: Error interno del servidor
  */
-router.get("/starships", middlewareValidator_1.middlewareValidator, startshipsControllers_1.getStarship);
+router.get("/starships", middlewareValidator_1.middlewareValidator, startshipsControllers_1.getStarships);
 /**
  * @swagger
  * /api/planets:

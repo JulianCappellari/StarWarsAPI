@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConexion = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const dbConexion = async () => {
     try {
         const dbUrl = process.env.CONNEXION_MONGOSE;
@@ -17,7 +19,7 @@ const dbConexion = async () => {
     }
     catch (error) {
         console.error('Error al conectar con la base de datos:', error);
-        throw new Error('No se pudo inicializar la base de datos');
+        throw Error('No se pudo inicializar la base de datos');
     }
 };
 exports.dbConexion = dbConexion;

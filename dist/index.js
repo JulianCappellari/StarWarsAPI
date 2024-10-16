@@ -10,6 +10,7 @@ require("dotenv/config");
 const App_1 = __importDefault(require("./routes/App"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const errorHandler_1 = require("./middleware/errorHandler");
 const app = (0, express_1.default)();
 app.use((req, res, next) => {
     console.log(`Request Method: ${req.method}, Request URL: ${req.url}`);
@@ -26,7 +27,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3001',
+                url: 'https://starwarsapi-xop3.onrender.com',
             },
         ],
     },
@@ -43,6 +44,7 @@ const startServer = async () => {
     // await syncPlanetsData();
     // await syncStarshipsData();
     app.use(express_1.default.json());
+    app.use(errorHandler_1.errorHandler);
     app.use('/api', App_1.default);
     const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => {

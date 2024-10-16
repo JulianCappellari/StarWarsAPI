@@ -3,180 +3,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const filmsController_1 = require("../controllers/filmsController");
-const Films_1 = __importDefault(require("../models/Films"));
-const axios_1 = __importDefault(require("axios"));
-jest.mock("../models/Films", () => ({
-    find: jest.fn(),
-    insertMany: jest.fn(),
-    countDocuments: jest.fn(),
-}));
-jest.mock("axios");
-describe("GET /api/films", () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
+const supertest_1 = __importDefault(require("supertest"));
+const express_1 = __importDefault(require("express"));
+const dbConfig_1 = require("../config/dbConfig");
+const App_1 = __importDefault(require("../routes/App"));
+const FilmService_1 = require("../services/film/FilmService");
+const errorHandler_1 = require("../middleware/errorHandler");
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use('/api', App_1.default);
+app.use(errorHandler_1.errorHandler);
+jest.mock('../services/film/FilmService');
+describe('GET /api/films', () => {
+    beforeAll(async () => {
+        await (0, dbConfig_1.dbConexion)();
     });
-    it("should return films from the database with filters", async () => {
-        const mockFilms = [
-            { title: "Return of the Jedi", episode_id: 6 },
-            { title: "A New Hope", episode_id: 4 },
-        ];
-        Films_1.default.find.mockReturnValue({
-            skip: jest.fn().mockReturnValue({
-                limit: jest.fn().mockResolvedValue(mockFilms),
-            }),
-        });
-        Films_1.default.countDocuments.mockResolvedValue(mockFilms.length);
-        const req = {
-            query: { title: "Return of the Jedi", page: "1", limit: "10" },
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(Films_1.default.find).toHaveBeenCalledWith({
-            title: new RegExp("Return of the Jedi", "i"),
-        });
-        expect(res.json).toHaveBeenCalledWith({
-            total: mockFilms.length,
+    it('debería devolver una lista de películas', async () => {
+        FilmService_1.FilmService.getFilms.mockResolvedValue({
+            total: 2,
             currentPage: 1,
-            films: mockFilms,
+            totalPages: 1,
+            data: [{ title: 'Star Wars' }, { title: 'The Empire Strikes Back' }]
         });
+        const response = await (0, supertest_1.default)(app)
+            .get('/api/films?page=1&limit=10');
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('total');
+        expect(response.body).toHaveProperty('currentPage');
+        expect(response.body).toHaveProperty('totalPages');
     });
-    it("should handle errors when fetching from the external API", async () => {
-        Films_1.default.find.mockReturnValueOnce({
-            skip: jest.fn().mockReturnValue({
-                limit: jest.fn().mockResolvedValue([]),
-            }),
-        });
-        axios_1.default.get.mockRejectedValueOnce(new Error("API Error"));
-        const req = {
-            query: { page: "1", limit: "10" },
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(Films_1.default.find).toHaveBeenCalledWith({});
-        expect(axios_1.default.get).toHaveBeenCalledWith("https://swapi.dev/api/films/");
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ error: "API Error" });
+    it('debería devolver un error 400 con parámetros inválidos', async () => {
+        const response = await (0, supertest_1.default)(app)
+            .get('/api/films?page=abc&limit=xyz');
+        expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
     });
-    it("should return 400 if page is not a number", async () => {
-        const req = {
-            query: { page: "invalid", limit: "10" },
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(res.status).toHaveBeenCalledWith(400);
-        expect(res.json).toHaveBeenCalledWith({
-            error: "Parametro invalido: page debe ser un numero.",
-        });
-    });
-    it("should return 400 if limit is not a number", async () => {
-        const req = {
-            query: { page: "1", limit: "invalid" },
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(res.status).toHaveBeenCalledWith(400);
-        expect(res.json).toHaveBeenCalledWith({
-            error: "Parametro invalido: limit debe ser un numero.",
-        });
-    });
-    it("should return all films if no parameters are provided", async () => {
-        const mockFilms = [
-            { title: "Return of the Jedi", episode_id: 6 },
-            { title: "A New Hope", episode_id: 4 },
-        ];
-        Films_1.default.find.mockReturnValue({
-            skip: jest.fn().mockReturnValue({
-                limit: jest.fn().mockResolvedValue(mockFilms),
-            }),
-        });
-        Films_1.default.countDocuments.mockResolvedValue(mockFilms.length);
-        const req = {
-            query: {},
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(res.status).not.toHaveBeenCalled();
-        expect(res.json).toHaveBeenCalledWith({
-            total: mockFilms.length,
-            currentPage: 1,
-            films: mockFilms,
-        });
-    });
-    it("should insert new films into the database if no films are found", async () => {
-        Films_1.default.find.mockReturnValueOnce({
-            skip: jest.fn().mockReturnValue({
-                limit: jest.fn().mockResolvedValue([]),
-            }),
-        });
-        const mockFilms = [
-            { title: "Return of the Jedi", episode_id: 6 },
-            { title: "A New Hope", episode_id: 4 },
-        ];
-        axios_1.default.get.mockResolvedValueOnce({
-            data: { results: mockFilms },
-        });
-        const req = {
-            query: { page: "1", limit: "10" },
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(Films_1.default.insertMany).toHaveBeenCalledWith(mockFilms);
-        expect(res.status).not.toHaveBeenCalled();
-        expect(res.json).toHaveBeenCalledWith({
-            total: mockFilms.length,
-            currentPage: 1,
-            films: mockFilms,
-        });
-    });
-    it("should return 500 if inserting new films into the database fails", async () => {
-        Films_1.default.find.mockReturnValueOnce({
-            skip: jest.fn().mockReturnValue({
-                limit: jest.fn().mockResolvedValue([]),
-            }),
-        });
-        const mockFilms = [
-            { title: "Return of the Jedi", episode_id: 6 },
-            { title: "A New Hope", episode_id: 4 },
-        ];
-        axios_1.default.get.mockResolvedValueOnce({
-            data: { results: mockFilms },
-        });
-        Films_1.default.insertMany.mockRejectedValueOnce(new Error("Insert error"));
-        const req = {
-            query: { page: "1", limit: "10" },
-        };
-        const res = {
-            json: jest.fn(),
-            status: jest.fn().mockReturnThis(),
-        };
-        const next = jest.fn();
-        await (0, filmsController_1.getFilms)(req, res, next);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });
+    it('debería devolver un error 500 en caso de error del servidor', async () => {
+        FilmService_1.FilmService.getFilms.mockRejectedValue(new Error('Error simulado'));
+        const response = await (0, supertest_1.default)(app).get('/api/films').set('Accept', 'application/json');
+        expect(response.status).toBe(500);
+        expect(response.body.message).toBe('Error simulado');
     });
 });
