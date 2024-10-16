@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 export const dbConexion = async (): Promise<void> => {
   try {
@@ -13,6 +17,6 @@ export const dbConexion = async (): Promise<void> => {
     console.log('DB conectada correctamente');
   } catch (error) {
     console.error('Error al conectar con la base de datos:', error);
-    throw new Error('No se pudo inicializar la base de datos');
+    throw  Error('No se pudo inicializar la base de datos');
   }
 };

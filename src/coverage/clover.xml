@@ -1,102 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1728685223315" clover="3.2.0">
-  <project timestamp="1728685223315" name="All files">
-    <metrics statements="84" coveredstatements="84" conditionals="52" coveredconditionals="48" methods="4" coveredmethods="4" elements="140" coveredelements="136" complexity="0" loc="84" ncloc="84" packages="1" files="4" classes="4"/>
-    <file name="filmsController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\filmsController.ts">
-      <metrics statements="21" coveredstatements="21" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
-      <line num="2" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="10" count="7" type="cond" truecount="2" falsecount="0"/>
-      <line num="11" count="7" type="cond" truecount="2" falsecount="0"/>
-      <line num="13" count="7" type="cond" truecount="3" falsecount="0"/>
-      <line num="14" count="1" type="stmt"/>
-      <line num="15" count="1" type="stmt"/>
-      <line num="17" count="6" type="cond" truecount="3" falsecount="0"/>
-      <line num="18" count="1" type="stmt"/>
-      <line num="19" count="1" type="stmt"/>
-      <line num="21" count="5" type="stmt"/>
-      <line num="22" count="5" type="stmt"/>
-      <line num="26" count="5" type="cond" truecount="1" falsecount="0"/>
-      <line num="27" count="3" type="stmt"/>
-      <line num="28" count="2" type="stmt"/>
-      <line num="30" count="2" type="stmt"/>
-      <line num="32" count="1" type="stmt"/>
-      <line num="37" count="3" type="stmt"/>
-      <line num="39" count="3" type="stmt"/>
-      <line num="45" count="2" type="stmt"/>
-    </file>
-    <file name="peopleController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\peopleController.ts">
-      <metrics statements="21" coveredstatements="21" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="4" count="1" type="stmt"/>
-      <line num="6" count="1" type="stmt"/>
-      <line num="7" count="8" type="cond" truecount="2" falsecount="0"/>
-      <line num="8" count="8" type="cond" truecount="2" falsecount="0"/>
-      <line num="11" count="8" type="cond" truecount="3" falsecount="0"/>
-      <line num="12" count="1" type="stmt"/>
-      <line num="13" count="1" type="stmt"/>
-      <line num="15" count="7" type="cond" truecount="3" falsecount="0"/>
-      <line num="16" count="1" type="stmt"/>
-      <line num="17" count="1" type="stmt"/>
-      <line num="20" count="6" type="stmt"/>
-      <line num="21" count="6" type="stmt"/>
-      <line num="25" count="6" type="cond" truecount="1" falsecount="0"/>
-      <line num="26" count="3" type="stmt"/>
-      <line num="27" count="2" type="stmt"/>
-      <line num="29" count="2" type="stmt"/>
-      <line num="31" count="1" type="stmt"/>
-      <line num="36" count="4" type="stmt"/>
-      <line num="38" count="4" type="stmt"/>
-      <line num="45" count="2" type="cond" truecount="1" falsecount="1"/>
-    </file>
-    <file name="planetsController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\planetsController.ts">
-      <metrics statements="21" coveredstatements="21" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
-      <line num="2" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="6" count="8" type="cond" truecount="2" falsecount="0"/>
-      <line num="8" count="8" type="cond" truecount="3" falsecount="0"/>
-      <line num="9" count="1" type="stmt"/>
-      <line num="10" count="1" type="stmt"/>
-      <line num="12" count="7" type="cond" truecount="3" falsecount="0"/>
-      <line num="13" count="1" type="stmt"/>
-      <line num="14" count="1" type="stmt"/>
-      <line num="17" count="6" type="cond" truecount="2" falsecount="0"/>
-      <line num="19" count="6" type="stmt"/>
-      <line num="20" count="6" type="stmt"/>
-      <line num="24" count="6" type="cond" truecount="1" falsecount="0"/>
-      <line num="25" count="3" type="stmt"/>
-      <line num="26" count="2" type="stmt"/>
-      <line num="28" count="2" type="stmt"/>
-      <line num="30" count="1" type="stmt"/>
-      <line num="35" count="4" type="stmt"/>
-      <line num="37" count="4" type="stmt"/>
-      <line num="44" count="2" type="cond" truecount="1" falsecount="1"/>
-    </file>
-    <file name="startshipsControllers.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\startshipsControllers.ts">
-      <metrics statements="21" coveredstatements="21" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
-      <line num="2" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="6" count="7" type="cond" truecount="2" falsecount="0"/>
-      <line num="8" count="7" type="cond" truecount="3" falsecount="0"/>
-      <line num="9" count="1" type="stmt"/>
-      <line num="10" count="1" type="stmt"/>
-      <line num="12" count="6" type="cond" truecount="3" falsecount="0"/>
-      <line num="13" count="1" type="stmt"/>
-      <line num="14" count="1" type="stmt"/>
-      <line num="17" count="5" type="stmt"/>
-      <line num="18" count="5" type="cond" truecount="2" falsecount="0"/>
-      <line num="20" count="5" type="stmt"/>
-      <line num="24" count="5" type="cond" truecount="1" falsecount="0"/>
-      <line num="25" count="3" type="stmt"/>
-      <line num="26" count="2" type="stmt"/>
-      <line num="28" count="2" type="stmt"/>
-      <line num="30" count="1" type="stmt"/>
-      <line num="35" count="3" type="stmt"/>
-      <line num="37" count="3" type="stmt"/>
-      <line num="44" count="2" type="cond" truecount="1" falsecount="1"/>
-    </file>
+<coverage generated="1729059931022" clover="3.2.0">
+  <project timestamp="1729059931022" name="All files">
+    <metrics statements="122" coveredstatements="122" conditionals="27" coveredconditionals="26" methods="15" coveredmethods="15" elements="164" coveredelements="163" complexity="0" loc="122" ncloc="122" packages="10" files="17" classes="17"/>
+    <package name="config">
+      <metrics statements="14" coveredstatements="14" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <file name="dbConfig.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\config\dbConfig.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="11" count="7" type="cond" truecount="1" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="29" count="13" type="cond" truecount="2" falsecount="0"/>
+      </file>
+    </package>
+    <package name="controllers">
+      <metrics statements="28" coveredstatements="28" conditionals="9" coveredconditionals="9" methods="4" coveredmethods="4"/>
+      <file name="filmsController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\filmsController.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="11" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+      <file name="peopleController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\peopleController.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+      </file>
+      <file name="planetsController.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\planetsController.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+      </file>
+      <file name="startshipsControllers.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\controllers\startshipsControllers.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="middleware">
+      <metrics statements="14" coveredstatements="14" conditionals="7" coveredconditionals="6" methods="4" coveredmethods="4"/>
+      <file name="errorHandler.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\middleware\errorHandler.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="5" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="7" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="21" count="5" type="cond" truecount="2" falsecount="0"/>
+      </file>
+      <file name="middlewareValidator.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\middleware\middlewareValidator.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="10" count="14" type="stmt"/>
+        <line num="12" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="14" count="10" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="models">
+      <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="Films.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\models\Films.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+      </file>
+      <file name="People.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\models\People.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="23" count="5" type="stmt"/>
+      </file>
+      <file name="Planets.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\models\Planets.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+      </file>
+      <file name="Starships.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\models\Starships.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="routes">
+      <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="App.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\routes\App.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="104" count="4" type="stmt"/>
+        <line num="193" count="4" type="stmt"/>
+        <line num="267" count="4" type="stmt"/>
+        <line num="269" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="paginate.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\services\paginate.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="13" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.film">
+      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="FilmService.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\services\film\FilmService.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="9" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.people">
+      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="PeopleService.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\services\people\PeopleService.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.planets">
+      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="PlanetService.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\services\planets\PlanetService.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.starships">
+      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="StarshipService.ts" path="C:\Users\Cappellari\OneDrive\Documents\Programacion\Proyecto entrevista\Backend\src\services\starships\StarshipService.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>

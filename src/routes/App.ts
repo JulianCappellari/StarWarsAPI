@@ -2,8 +2,9 @@ import { Router } from "express";
 import { getPeople } from "../controllers/peopleController";
 import { getFilms } from "../controllers/filmsController";
 import { getPlanets } from "../controllers/planetsController";
+import { getStarships } from "../controllers/startshipsControllers";
 
-import { getStarship } from "../controllers/startshipsControllers";
+
 import { middlewareValidator } from "../middleware/middlewareValidator";
 
 
@@ -189,7 +190,7 @@ router.get("/films", middlewareValidator,getFilms);
  *       500:
  *         description: Error interno del servidor
  */
-router.get("/starships", middlewareValidator, getStarship);
+router.get("/starships", middlewareValidator, getStarships);
 
 
 /**

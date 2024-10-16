@@ -6,6 +6,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,  // Esto también es importante para algunos decoradores
+    "strictPropertyInitialization": false,
     "outDir": "./dist" // Asegúrate de que los archivos JS se generen aquí
   },
   "include": [

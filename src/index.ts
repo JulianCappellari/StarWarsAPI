@@ -1,14 +1,11 @@
 import express from 'express';
 import { dbConexion } from './config/dbConfig';
 import './cron/scheduler';
-import { syncFilmsData } from './services/syncFilms';
-import { syncPeopleData } from './services/syncPeople';
-import { syncPlanetsData } from './services/syncPlanets';
-import { syncStarshipsData } from './services/syncStarships';
 import 'dotenv/config';
 import router from './routes/App';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { errorHandler } from './middleware/errorHandler';
 
 
 const app = express();
@@ -50,6 +47,7 @@ const startServer = async () => {
 
   app.use(express.json()); 
 
+  app.use(errorHandler)
   
   app.use('/api', router);
 

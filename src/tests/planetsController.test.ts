@@ -1,244 +1,56 @@
-import { getPlanets } from "../controllers/planetsController";
-import Planets from "../models/Planets";
-import axios from "axios";
-import { NextFunction, Request, Response } from "express";
+import request from 'supertest';
+import express from 'express';
+import { dbConexion } from '../config/dbConfig';
+import router from '../routes/App';
+import { PlanetService } from '../services/planets/PlanetService';
+import { errorHandler } from '../middleware/errorHandler';
 
-jest.mock("../models/Planets", () => ({
-  find: jest.fn(),
-  insertMany: jest.fn(),
-  countDocuments: jest.fn(),
-}));
+const app = express();
+app.use(express.json());
+app.use('/api', router);
+app.use(errorHandler);
 
-jest.mock("axios");
+jest.mock('../services/planets/PlanetService');
 
-describe("GET /api/planets", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();  
+describe('GET /api/planets', () => {
+  beforeAll(async () => {
+    await dbConexion();
   });
 
-  it("should return planets from the database with filters", async () => {
-    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
-
-    (Planets.find as jest.Mock).mockReturnValue({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue(mockPlanets), 
-      }),
-    });
-
-    (Planets.countDocuments as jest.Mock).mockResolvedValue(mockPlanets.length); 
-
-    const req = {
-      query: { page: "1", limit: "10" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      total: mockPlanets.length,
-      currentPage: 1,
-      totalPages: 1,
-      data: mockPlanets,
-    });
-  });
-
-  it("should handle errors when fetching from the external API", async () => {
-    (Planets.find as jest.Mock).mockReturnValueOnce({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue([]),
-      }),
-    });
-
-    (axios.get as jest.Mock).mockRejectedValueOnce(new Error("API Error"));
-
-    const req = {
-      query: { page: "1", limit: "10" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(Planets.find).toHaveBeenCalledWith({});
-    expect(axios.get).toHaveBeenCalledWith("https://swapi.dev/api/planets/");
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: "API Error" });
-  });
-
-  it("should return 400 if page is not a number", async () => {
-    const req = {
-      query: { page: "invalid", limit: "10" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Parametro invalido: page debe ser un numero.",
-    });
-  });
-
-  it("should return 400 if limit is not a number", async () => {
-    const req = {
-      query: { page: "1", limit: "invalid" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Parametro invalido: limit debe ser un numero.",
-    });
-  });
-
-  it("should return all planets if no parameters are provided", async () => {
-    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
-
-    (Planets.find as jest.Mock).mockReturnValue({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue(mockPlanets),
-      }),
-    });
-
-    (Planets.countDocuments as jest.Mock).mockResolvedValue(mockPlanets.length);
-
-    const req = {
-      query: {},
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      total: mockPlanets.length,
-      currentPage: 1,
-      totalPages: 1,
-      data: mockPlanets,
-    });
-  });
-
-  it("should insert new planets into the database if no planets are found", async () => {
-    (Planets.find as jest.Mock).mockReturnValueOnce({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue([]),
-      }),
-    });
-
-    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
-    (axios.get as jest.Mock).mockResolvedValueOnce({
-      data: { results: mockPlanets },
-    });
-
-    const req = {
-      query: { page: "1", limit: "10" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(Planets.insertMany).toHaveBeenCalledWith(mockPlanets);
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      total: mockPlanets.length,
-      currentPage: 1,
-      totalPages: 1,
-      data: mockPlanets,
-    });
-  });
-
-  it("should return 500 if inserting new planets into the database fails", async () => {
-    (Planets.find as jest.Mock).mockReturnValueOnce({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue([]),
-      }),
-    });
-
-    const mockPlanets = [{ name: "Tatooine" }, { name: "Alderaan" }];
-    (axios.get as jest.Mock).mockResolvedValueOnce({
-      data: { results: mockPlanets },
-    });
-
+  it('debería devolver una lista de planetas', async () => {
     
-    (Planets.insertMany as jest.Mock).mockRejectedValueOnce(new Error("Insert error"));
-
-    const req = {
-      query: { page: "1", limit: "10" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: "Insert error" });
-  });
-
-  it("should return planets filtered by name", async () => {
-    const mockPlanets = [{ name: "Tatooine" }];
-
-    (Planets.find as jest.Mock).mockReturnValue({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockResolvedValue(mockPlanets),
-      }),
-    });
-
-    (Planets.countDocuments as jest.Mock).mockResolvedValue(mockPlanets.length);
-
-    const req = {
-      query: { name: "Tatooine", page: "1", limit: "10" },
-    } as unknown as Request;
-
-    const res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-    } as unknown as Response;
-
-    const next: NextFunction = jest.fn();
-    await getPlanets(req, res, next);
-
-    expect(res.status).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      total: mockPlanets.length,
+    (PlanetService.getPlanets as jest.Mock).mockResolvedValue({
+      total: 2,
       currentPage: 1,
       totalPages: 1,
-      data: mockPlanets,
+      data: [{ name: 'Tatooine' }, { name: 'Alderaan' }]
     });
+
+    const response = await request(app)
+      .get('/api/planets?page=1&limit=10');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('total');
+    expect(response.body).toHaveProperty('currentPage');
+    expect(response.body).toHaveProperty('totalPages');
+  });
+
+  it('debería devolver un error 400 con parámetros inválidos', async () => {
+    const response = await request(app)
+      .get('/api/planets?page=abc&limit=xyz');
+
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+  });
+
+  it('debería devolver un error 500 en caso de error del servidor', async () => {
+    
+    (PlanetService.getPlanets as jest.Mock).mockRejectedValue(new Error('Error simulado'));
+  
+    const response = await request(app).get('/api/planets').set('Accept', 'application/json');
+  
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Error simulado'); 
   });
 });

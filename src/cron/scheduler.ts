@@ -1,43 +1,27 @@
 import cron from 'node-cron';
-import { syncPeopleData } from '../services/syncPeople';
-import { syncFilmsData } from '../services/syncFilms';
-import { syncStarshipsData } from '../services/syncStarships';
-import { syncPlanetsData } from '../services/syncPlanets';
+import { syncPeopleData } from '../services/people/syncPeople';
+import { syncFilmsData } from '../services/film/syncFilms';
+import { syncStarshipsData } from '../services/starships/syncStarships';
+import { syncPlanetsData } from '../services/planets/syncPlanets';
+
 
 console.log('Scheduler initialized.');
 
-// Función para ejecutar la sincronización
 const runSyncs = async () => {
-    console.log('Running initial syncs...');
-    await syncPeopleData();
-    await syncFilmsData();
-    await syncStarshipsData();
-    await syncPlanetsData();
-  };
-  
-  // Llama a la función de sincronización inicial al iniciar el servidor
-  runSyncs();
+  console.log('Running syncs...');
+  await Promise.all([
+    syncPeopleData(),
+    syncFilmsData(),
+    syncStarshipsData(),
+    syncPlanetsData(),
+  ]);
+};
 
-// Sincroniza los datos de People cada 24 horas
-cron.schedule('0 0 * * *', async () => {
-  console.log('Running sync for People data...');
-  await syncPeopleData();
-});
+// Inicializa la sincronización
+runSyncs();
 
-// Sincroniza los datos de Films cada 24 horas
+// Cron job único para todas las sincronizaciones
 cron.schedule('0 0 * * *', async () => {
-  console.log('Running sync for Films data...');
-  await syncFilmsData();
-});
-
-// Sincroniza los datos de Starships cada 24 horas
-cron.schedule('0 0 * * *', async () => {
-  console.log('Running sync for Starships data...');
-  await syncStarshipsData();
-});
-
-// Sincroniza los datos de Planets cada 24 horas
-cron.schedule('0 0 * * *', async () => {
-  console.log('Running sync for Planets data...');
-  await syncPlanetsData();
+  console.log('Running scheduled sync...');
+  await runSyncs();
 });
